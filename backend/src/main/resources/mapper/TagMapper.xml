@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="warma.desktop.media.tidy.mapper.TagMapper">
+    <insert id="batchInsert">
+        <if test="items != null and items.size() > 0">
+            insert into tag(name, description, folder, not_index, profile_id, menu_order) values
+            <foreach collection="items" item="item" separator="," close=";">
+                (#{item.name},#{item.description},#{item.folder},#{item.notIndex},#{item.profileId},#{item.menuOrder})
+            </foreach>
+        </if>
+    </insert>
+
+    <insert id="insertAtLast" parameterType="warma.desktop.media.tidy.models.data.Tag">
+        insert into tag(name, description, folder, not_index, profile_id, menu_order)
+        values (#{name}, #{description}, #{folder}, #{notIndex}, #{profileId}, (select max(menu_order) + 1 from tag));
+    </insert>
+
+    <update id="batchUpdate" parameterType="warma.desktop.media.tidy.models.data.Tag">
+        <if test="items != null and items.size() > 0">
+            <foreach collection="items" item="item" separator="," close=";">
+                update tag
+                set
+                name = #{item.name}
+                , update_at = current_timestamp
+                <if test="item.description != null">
+                    , description = #{item.description}
+                </if>
+                <if test="item.folder != null">
+                    , folder = #{item.folder}
+                </if>
+                <if test="item.notIndex != null">
+                    , not_index = #{item.notIndex}
+                </if>
+                <if test="item.profileId != null">
+                    , profile_id = #{item.profileId}
+                </if>
+                <if test="item.menuOrder != null">
+                    , menu_order = #{item.menuOrder}
+                </if>
+                where id = #{item.id}
+            </foreach>
+        </if>
+    </update>
+
+    <update id="updateOrder">
+        <if test="items != null and items.size() > 0">
+            <foreach collection="items" item="item" index="idx" separator=";">
+                update tag
+                set menu_order = #{idx}
+                where id = #{item}
+            </foreach>
+        </if>
+    </update>
+</mapper>

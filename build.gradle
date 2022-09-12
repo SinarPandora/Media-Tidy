@@ -1,0 +1,76 @@
+plugins {
+    id "idea"
+}
+
+/**
+ * 项目初始化任务
+ * - 清空已存在的数据库
+ * - 建库建表迁移数据
+ * - 自动安装前端依赖
+ */
+task setup(type: GradleBuild) {
+    group = 'project'
+    description = 'Setup project'
+    doFirst {
+        println 'Start setup project'
+        println 'Project name:' + project.name
+        println 'Group name:' + project.group
+        println 'Version:' + project.version
+        println '☕️ Start reset, migrate database and install node dependencies, please wait...'
+    }
+
+    tasks = [':frontend:install']
+
+    doLast {
+        println '🎉 Project setup complete! Enjoy coding! 🤩'
+    }
+}
+
+/**
+ * 项目全量构建 & 运行任务
+ * - 构建前端 & 后端
+ * - 更新数据库数据
+ * - 整合前后端代码
+ * - 运行项目
+ */
+task run(type: GradleBuild) {
+    group = 'project'
+    description = 'Run project with both frontend and backend'
+    tasks = [':frontend:generateStatic', ':backend:quarkusDev']
+
+    doFirst {
+        def nodeDependencies = new File(project(':frontend').projectDir, 'node_modules')
+        if (!nodeDependencies.exists()) {
+            // 如果没有初始化项目而是直接点了运行，则需要先安装依赖
+            println '🛠 Node dependencies not found, install first...'
+            tasks = [':frontend:install', *tasks]
+        }
+    }
+}
+
+/**
+ * 启动前端开发服务
+ */
+task frontendDev(type: GradleBuild) {
+    group = 'project'
+    description = 'Start frontend Vue development server'
+    tasks = [':frontend:serve']
+}
+
+/**
+ * 启动前端原生开发服务
+ */
+task frontendNativeDev(type: GradleBuild) {
+    group = 'project'
+    description = 'Start frontend Vue development server'
+    tasks = [':frontend:nativeServe']
+}
+
+/**
+ * 启动后端开发服务
+ */
+task backendDev(type: GradleBuild) {
+    group = 'project'
+    description = 'Start backend Quarkus development server'
+    tasks = [':backend:quarkusDev']
+}

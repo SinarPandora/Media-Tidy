@@ -1,0 +1,79 @@
+plugins {
+    id 'com.github.node-gradle.node' version '3.1.1'
+}
+
+/**
+ * 安装前端项目依赖
+ */
+task install(type: YarnTask) {
+    group = 'yarn'
+    description = 'Install dependencies'
+    args = ['install']
+
+    doFirst {
+        exec {
+            executable 'npm'
+            args 'install', 'yarn', '--global'
+        }
+    }
+}
+
+/**
+ * 启动前端开发服务器
+ */
+task serve(type: YarnTask) {
+    group = 'vue'
+    description = 'Runs the Vue.js development server'
+    args = ['serve']
+
+    doFirst {
+        println '🗑 Cleaning up springboot static files for accessing the vue server only...'
+        delete project(':backend').file('src/main/resources/META-INF/resources')
+        println '🛠 Starting vue development server...'
+    }
+}
+
+task nativeServe(type: YarnTask) {
+    group = 'vue'
+    description = 'Runs the Vue.js x Tauri development server'
+    args = ['tauri:serve']
+
+    doFirst {
+        println '🗑 Cleaning up springboot static files for accessing the vue server only...'
+        delete project(':backend').file('src/main/resources/META-INF/resources')
+        println '🛠 Starting vue development server...'
+    }
+}
+
+/**
+ * 构建前端项目并移动到 Springboot 静态资源文件夹中
+ * - 此时更改前端代码需要重新执行该步骤构建
+ * - 建议在开发过程中使用上面的开发服务器模式
+ */
+task generateStatic(type: YarnTask) {
+    group = 'integration'
+    description = 'Build static files, then move them to springboot static folder'
+    args = ['build']
+
+    doFirst {
+        println '🛠 Generating static files...'
+    }
+
+    doLast {
+        println '🧱 Copying static files to springboot static folder...'
+        def staticDir = new File(projectDir, 'dist')
+        def springbootStaticDir = new File(project(':backend').projectDir, 'src/main/resources/META-INF/resources')
+        if (!staticDir.exists()) {
+            staticDir.mkdirs()
+        } else {
+            staticDir.delete()
+            staticDir.mkdirs()
+        }
+
+        copy {
+            from staticDir
+            into springbootStaticDir
+        }
+        println '✅ Static files copied to springboot static folder!'
+    }
+}

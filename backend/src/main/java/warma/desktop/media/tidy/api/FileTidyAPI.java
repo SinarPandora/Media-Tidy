@@ -47,7 +47,7 @@ public class FileTidyAPI {
     @SuppressWarnings("unused")
     @Route(path = "tidy/preview/*", methods = Route.HttpMethod.GET)
     public void preview(RoutingContext rc) {
-        StaticHandler.create(FileSystemAccess.ROOT, "/").handle(rc);
+        StaticHandler.create(FileSystemAccess.ROOT, "").handle(rc);
     }
 
     /**

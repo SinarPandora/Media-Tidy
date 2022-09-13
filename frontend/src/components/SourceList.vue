@@ -138,7 +138,6 @@ export default class SourceList extends Vue {
 
   // noinspection JSUnusedGlobalSymbols
   mounted() {
-    console.log('start')
     this.isLoading = true;
     this.reload();
     this.$store.watch(state => state.sources, () => this.reload());

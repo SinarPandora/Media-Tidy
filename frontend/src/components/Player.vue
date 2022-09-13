@@ -131,7 +131,7 @@ export default class Player extends Vue {
   async onLoad() {
     if (this.file == null) return;
     const filepath = await path.join(this.file.folder, this.file.filename)
-    this.player.src = `http://localhost:9010/tidy/preview${filepath}`;
+    this.player.src = `http://localhost:9010/tidy/preview/${filepath}`;
     if (this.player.autoplay) this.isPlaying = true;
   }
 }

@@ -6,7 +6,8 @@ export const instance: AxiosInstance = (() => {
     const ins = axios.create({});
     ins.interceptors.request.use((config) => {
         config.withCredentials = true;
-        config.baseURL = 'http://localhost:9010'
+        config.baseURL = 'http://localhost:9010';
+        config.timeout = 20 * 1000;
         return config
     });
 

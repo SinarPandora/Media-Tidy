@@ -25,7 +25,7 @@
     </div>
     <v-card class="mt-1 tag-container" elevation="0" ref="container">
       <v-container fluid>
-        <v-row>
+        <v-row :key="forceReloadKey">
           <v-col
               class="d-flex justify-center align-center tag-line"
               cols="3" lg="2"
@@ -77,6 +77,7 @@ export default class TagSelector extends Vue {
     open: false
   }
   editMode = false;
+  forceReloadKey = new Date().getTime();
 
   // noinspection JSUnusedGlobalSymbols
   mounted() {
@@ -87,6 +88,7 @@ export default class TagSelector extends Vue {
   load() {
     this.isLoading = true;
     this.tags = this.$store.state.tags;
+    this.forceReloadKey = new Date().getTime();
     this.isLoading = false;
   }
 

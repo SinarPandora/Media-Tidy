@@ -44,4 +44,13 @@ public interface TagMapper extends BaseMapper<Tag> {
      * @return 更新结果
      */
     int batchUpdate(@Param("items") List<Tag> tags);
+
+    /**
+     * 通过 ID 更新顺序
+     *
+     * @param id    ID
+     * @param index 顺序
+     * @return 影响行数
+     */
+    int updateOrder(@Param("id") long id, @Param("index") int index);
 }

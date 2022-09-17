@@ -49,4 +49,8 @@
             </foreach>
         </if>
     </update>
+
+    <update id="updateOrder">
+        update tag set menu_order = #{index} where id = #{id};
+    </update>
 </mapper>

@@ -62,7 +62,10 @@ public class TagService {
     @Transactional
     public void reorder(List<Long> orderedIds) {
         if (!orderedIds.isEmpty()) {
-            tagRepo.updateOrders(orderedIds);
+            for (int idx = 0; idx < orderedIds.size(); idx++) {
+                // Transaction issue, only update in loop using SQL is ok
+                tagRepo.updateOrder(orderedIds.get(idx), idx);
+            }
         }
     }
 

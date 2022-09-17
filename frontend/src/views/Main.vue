@@ -1,11 +1,11 @@
 <template>
-  <v-container fluid style="height: 100%; min-width: 960px">
+  <v-container fluid style="height: calc(100vh - 100px); min-width: 960px">
     <v-row style="height: 160px; position: sticky">
       <v-col>
         <player :file="selectedFile"/>
       </v-col>
     </v-row>
-    <v-row style="height: calc(100% - 160px); min-height: 374px;">
+    <v-row style="height: calc(100vh - 240px); overflow-y: hidden; min-height: 374px;">
       <v-col cols="6" lg="3">
         <source-list @select="onMediaSelect"/>
       </v-col>

@@ -82,6 +82,7 @@ export default class TagBtn extends Vue {
 
 .tag-name {
   white-space: nowrap;
+  text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
   transition: .5s ease all;

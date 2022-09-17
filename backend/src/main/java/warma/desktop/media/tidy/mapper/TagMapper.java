@@ -35,7 +35,7 @@ public interface TagMapper extends BaseMapper<Tag> {
      * @param ids 有序 ID 列表
      * @return 影响行数
      */
-    int updateOrder(@Param("items") List<Long> ids);
+    int updateOrders(@Param("items") List<Long> ids);
 
     /**
      * 批量更新

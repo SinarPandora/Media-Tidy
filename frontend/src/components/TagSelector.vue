@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="0" style="height: 100%" class="pa-2" ref="parentContainer">
+  <v-card elevation="0" class="pa-2" ref="parentContainer">
     <div class="d-flex mt-1" v-if="!editMode">
       <v-btn small icon color="warma-dark" class="ml-3 border--warma-dark" @click.stop="tagEditorPopup.open = true">
         <v-icon>mdi-plus</v-icon>
@@ -7,6 +7,7 @@
       <v-btn small icon color="warma-dark" class="ml-3 border--warma-dark" @click.stop="editMode = true">
         <v-icon>mdi-pencil-outline</v-icon>
       </v-btn>
+      <tag-sort-popup/>
       <v-spacer/>
       <v-btn small text color="warma-dark" tile outlined class="ml-3 border--warma-dark bold-border"
              @click.stop="profileSelector.open = true">加载按钮设定
@@ -27,7 +28,7 @@
         <v-row>
           <v-col
               class="d-flex justify-center align-center tag-line"
-              cols="3"
+              cols="3" lg="2"
               v-for="(tag, idx) in tags" :key="idx"
           >
             <tag-btn :tag="tag" @click.native.stop="onClick(tag)" :edit-mode="editMode"></tag-btn>
@@ -56,9 +57,10 @@ import {appDir} from "@tauri-apps/api/path";
 import {ExportProfileRequest} from "@/models/export-profile-request";
 import {$Vue} from "@/main";
 import {Message} from "@/components/MessageToast.vue";
+import TagSortPopup from "@/components/TagSortPopup.vue";
 
 @Component({
-  components: {ProfileSelector, TagBtn, TagCreatePopup}
+  components: {TagSortPopup, ProfileSelector, TagBtn, TagCreatePopup}
 })
 export default class TagSelector extends Vue {
   @Prop({required: true})
@@ -66,6 +68,9 @@ export default class TagSelector extends Vue {
   isLoading = false;
   tags: Tag[] = [];
   tagEditorPopup = {
+    open: false
+  }
+  tagSortPopup = {
     open: false
   }
   profileSelector = {
@@ -77,13 +82,6 @@ export default class TagSelector extends Vue {
   mounted() {
     this.load();
     this.$store.watch(state => state.tags, () => this.load());
-    // TODO: Auto size
-    // appWindow.onResized(async () => {
-    //   const iSize = await appWindow.innerSize();
-    //   const factor = await appWindow.scaleFactor();
-    //   const size = iSize.toLogical(factor);
-    //   (this.$refs.container as HTMLDivElement).style.maxHeight = `${size.height - 160 - 36}px`;
-    // });
   }
 
   load() {
@@ -133,7 +131,7 @@ export default class TagSelector extends Vue {
 
 <style scoped>
 .tag-container {
-  max-height: calc(400px - 36px);
+  height: calc(100vh - 300px);
   overflow-y: scroll;
 }
 
@@ -144,7 +142,6 @@ export default class TagSelector extends Vue {
 .tag-line {
   user-select: none;
   width: 100%;
-  height: 100%;
   display: flex;
 }
 </style>

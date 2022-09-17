@@ -59,8 +59,11 @@ public class TagService {
      *
      * @param orderedIds 有序的 ID 列表
      */
+    @Transactional
     public void reorder(List<Long> orderedIds) {
-        tagRepo.updateOrder(orderedIds);
+        if (!orderedIds.isEmpty()) {
+            tagRepo.updateOrders(orderedIds);
+        }
     }
 
     /**

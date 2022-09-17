@@ -1,10 +1,10 @@
 <template>
-  <v-card elevation="0" style="height: 100%" class="pa-2">
+  <v-card elevation="0" class="pa-2">
     <v-btn elevation="0" class="top-btn" color="warma-yellow" @click.stop="importDialog.open = true">
       <span class="text--warma-dark">导入文件夹</span>
     </v-btn>
     <v-card class="bottom-list" outlined>
-      <v-container fluid style="overflow-y: scroll; max-height: 350px">
+      <v-container fluid class="source-list">
         <v-treeview
             style="user-select: none"
             :items="tree"
@@ -284,6 +284,12 @@ export default class SourceList extends Vue {
 
 <!--suppress CssUnresolvedCustomProperty -->
 <style scoped>
+
+.source-list {
+  height: calc(100vh - 310px);
+  overflow-y: scroll;
+}
+
 .top-btn {
   border: 3px solid var(--v-warma-dark-base) !important;
   border-bottom: none !important;

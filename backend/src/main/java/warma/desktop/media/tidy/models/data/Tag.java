@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Date;
  * 2022/8/31 21:04
  */
 @Data
+@NoArgsConstructor
 @TableName("tag")
 public class Tag {
     @TableId(type = IdType.AUTO)

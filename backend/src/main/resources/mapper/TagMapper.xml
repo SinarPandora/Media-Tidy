@@ -42,12 +42,10 @@
         </if>
     </update>
 
-    <update id="updateOrder">
+    <update id="updateOrders">
         <if test="items != null and items.size() > 0">
-            <foreach collection="items" item="item" index="idx" separator=";">
-                update tag
-                set menu_order = #{idx}
-                where id = #{item}
+            <foreach collection="items" item="item" index="index" separator=";">
+                update tag set menu_order = ${index} where id = ${item}
             </foreach>
         </if>
     </update>

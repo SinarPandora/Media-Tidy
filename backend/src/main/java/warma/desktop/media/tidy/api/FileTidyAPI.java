@@ -1,13 +1,10 @@
 package warma.desktop.media.tidy.api;
 
 import io.quarkus.vertx.web.Route;
-import io.smallrye.mutiny.Uni;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.FileSystemAccess;
 import io.vertx.ext.web.handler.StaticHandler;
-import io.vertx.mutiny.core.file.AsyncFile;
 import lombok.extern.slf4j.Slf4j;
-import org.jboss.resteasy.reactive.RestPath;
 import warma.desktop.media.tidy.models.TidyRequest;
 import warma.desktop.media.tidy.service.FileTidyService;
 

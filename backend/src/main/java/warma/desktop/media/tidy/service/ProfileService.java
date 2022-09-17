@@ -16,7 +16,6 @@ import warma.desktop.media.tidy.models.ImportableProfile;
 import warma.desktop.media.tidy.models.data.Profile;
 import warma.desktop.media.tidy.models.data.Source;
 import warma.desktop.media.tidy.models.data.Tag;
-import warma.desktop.media.tidy.models.data.TidyHistory;
 import warma.desktop.media.tidy.system.exception.ApiException;
 
 import javax.enterprise.context.ApplicationScoped;

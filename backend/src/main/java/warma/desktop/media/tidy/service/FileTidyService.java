@@ -1,13 +1,7 @@
 package warma.desktop.media.tidy.service;
 
-import io.smallrye.mutiny.Uni;
-import io.vertx.core.file.OpenOptions;
-import io.vertx.ext.web.RoutingContext;
-import io.vertx.mutiny.core.Vertx;
-import io.vertx.mutiny.core.file.AsyncFile;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.jboss.resteasy.reactive.RestQuery;
 import warma.desktop.media.tidy.mapper.MediaFileMapper;
 import warma.desktop.media.tidy.mapper.TagMapper;
 import warma.desktop.media.tidy.models.TidyRequest;
@@ -18,7 +12,6 @@ import warma.desktop.media.tidy.system.exception.ApiException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
@@ -34,8 +27,6 @@ import java.util.UUID;
 @ApplicationScoped
 @SuppressWarnings("CdiInjectionPointsInspection")
 public class FileTidyService {
-    private static final OpenOptions READ_ONLY = new OpenOptions().setCreate(false).setWrite(false);
-
     @Inject
     HistoryService historyService;
 
@@ -44,9 +35,6 @@ public class FileTidyService {
 
     @Inject
     TagMapper tagRepo;
-
-    @Inject
-    Vertx vertx;
 
     /**
      * 整理
